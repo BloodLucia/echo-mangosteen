@@ -13,6 +13,11 @@ type User struct {
 	Email     string       `xorm:"not null VARCHAR(100) UNIQUE email"`
 }
 
+type UserLoginRequest struct {
+	Email string
+	Code  string
+}
+
 func (User) TableName() string {
 	return "users"
 }
