@@ -6,7 +6,7 @@ type userController struct {
 }
 
 // Login implements UserController.
-func (*userController) Login(c echo.Context) error {
+func (ctrl *userController) Login(c echo.Context) error {
 	return c.JSON(200, "login!")
 }
 
