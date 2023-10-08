@@ -2,11 +2,11 @@ package controller
 
 import "github.com/labstack/echo/v4"
 
-type controller struct {
+type pingController struct {
 }
 
 // Pingc implements PingController.
-func (ctrl *controller) Ping(c echo.Context) error {
+func (ctrl *pingController) Ping(c echo.Context) error {
 	return c.JSON(200, echo.Map{
 		"msg": "pong!",
 	})
@@ -17,5 +17,5 @@ type PingController interface {
 }
 
 func NewPingController() PingController {
-	return &controller{}
+	return &pingController{}
 }
