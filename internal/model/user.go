@@ -18,6 +18,10 @@ type UserLoginRequest struct {
 	Code  string
 }
 
+type UserLoginResponse struct {
+	Token string `json:"token"`
+}
+
 func (User) TableName() string {
 	return "users"
 }
