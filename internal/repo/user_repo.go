@@ -18,13 +18,13 @@ func (ur *userRepo) FindOrCreateByEmail(ctx context.Context, user *model.User) e
 	if err != nil {
 		return e.ErrDatabase
 	}
-	if exist {
+	if !exist {
 		if _, err := ur.Data.DB.Insert(user); err != nil {
 			return e.ErrDatabase
 		}
 		return nil
 	}
-	panic("unimplemented")
+	return nil
 }
 
 type UserRepo interface {
