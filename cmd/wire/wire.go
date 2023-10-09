@@ -6,7 +6,9 @@ package wire
 import (
 	"echo-mangosteen/internal/common/data"
 	"echo-mangosteen/internal/controller"
+	"echo-mangosteen/internal/repo"
 	"echo-mangosteen/internal/router"
+	"echo-mangosteen/internal/service"
 
 	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
@@ -14,11 +16,22 @@ import (
 
 var controllerProvider = wire.NewSet(
 	controller.NewPingController,
+	controller.NewUserController,
+)
+
+var repoProvider = wire.NewSet(
+	repo.NewUserRepo,
+)
+
+var serviceProvider = wire.NewSet(
+	service.NewUserService,
 )
 
 func NewApp() (*echo.Echo, func(), error) {
 	panic(wire.Build(
 		data.NewData,
+		repoProvider,
+		serviceProvider,
 		controllerProvider,
 		router.NewRouter,
 	))

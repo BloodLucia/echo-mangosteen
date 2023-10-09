@@ -9,7 +9,9 @@ package wire
 import (
 	"echo-mangosteen/internal/common/data"
 	"echo-mangosteen/internal/controller"
+	"echo-mangosteen/internal/repo"
 	"echo-mangosteen/internal/router"
+	"echo-mangosteen/internal/service"
 	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
 )
@@ -22,7 +24,10 @@ func NewApp() (*echo.Echo, func(), error) {
 		return nil, nil, err
 	}
 	pingController := controller.NewPingController(dataData)
-	echoEcho := router.NewRouter(pingController)
+	userRepo := repo.NewUserRepo(dataData)
+	userService := service.NewUserService(userRepo)
+	userController := controller.NewUserController(userService)
+	echoEcho := router.NewRouter(pingController, userController)
 	return echoEcho, func() {
 		cleanup()
 	}, nil
@@ -30,4 +35,8 @@ func NewApp() (*echo.Echo, func(), error) {
 
 // wire.go:
 
-var controllerProvider = wire.NewSet(controller.NewPingController)
+var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController)
+
+var repoProvider = wire.NewSet(repo.NewUserRepo)
+
+var serviceProvider = wire.NewSet(service.NewUserService)
