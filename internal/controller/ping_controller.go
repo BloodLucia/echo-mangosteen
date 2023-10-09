@@ -1,8 +1,13 @@
 package controller
 
-import "github.com/labstack/echo/v4"
+import (
+	"echo-mangosteen/internal/common/data"
+
+	"github.com/labstack/echo/v4"
+)
 
 type pingController struct {
+	*data.Data
 }
 
 // Pingc implements PingController.
@@ -16,6 +21,6 @@ type PingController interface {
 	Ping(c echo.Context) error
 }
 
-func NewPingController() PingController {
-	return &pingController{}
+func NewPingController(data *data.Data) PingController {
+	return &pingController{Data: data}
 }
