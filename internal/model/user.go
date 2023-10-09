@@ -14,8 +14,8 @@ type User struct {
 }
 
 type UserLoginRequest struct {
-	Email string
-	Code  string
+	Email string `json:"email" validate:"required"`
+	Code  string `json:"code" validate:"required"`
 }
 
 type UserLoginResponse struct {

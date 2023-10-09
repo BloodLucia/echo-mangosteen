@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"echo-mangosteen/internal/model"
 	"echo-mangosteen/internal/service"
+	"echo-mangosteen/pkg/response"
 
 	"github.com/labstack/echo/v4"
 )
@@ -11,12 +13,16 @@ type userController struct {
 }
 
 // Login implements UserController.
-func (ctrl *userController) Login(c echo.Context) error {
-	return c.JSON(200, "login!")
+func (ctrl *userController) Login(ctx echo.Context) error {
+	reqBody := new(model.UserLoginRequest)
+	if err := ctx.Bind(reqBody); err != nil {
+		return response.Build(ctx, err, nil)
+	}
+	return ctx.JSON(200, "login!")
 }
 
 type UserController interface {
-	Login(c echo.Context) error
+	Login(ctx echo.Context) error
 }
 
 func NewUserController(userService service.UserService) UserController {
