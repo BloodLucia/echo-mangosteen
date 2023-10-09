@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"echo-mangosteen/pkg/response"
+
 	"github.com/labstack/echo/v4"
 )
 
@@ -9,9 +11,7 @@ type pingController struct {
 
 // Pingc implements PingController.
 func (ctrl *pingController) Ping(c echo.Context) error {
-	return c.JSON(200, echo.Map{
-		"msg": "pong!",
-	})
+	return response.Build(c, nil, "pong!")
 }
 
 type PingController interface {
