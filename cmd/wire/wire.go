@@ -9,6 +9,7 @@ import (
 	"echo-mangosteen/internal/repo"
 	"echo-mangosteen/internal/router"
 	"echo-mangosteen/internal/service"
+	"echo-mangosteen/pkg/cache"
 
 	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
@@ -30,6 +31,7 @@ var serviceProvider = wire.NewSet(
 func NewApp() (*echo.Echo, func(), error) {
 	panic(wire.Build(
 		data.NewData,
+		cache.NewCahce,
 		repoProvider,
 		serviceProvider,
 		controllerProvider,

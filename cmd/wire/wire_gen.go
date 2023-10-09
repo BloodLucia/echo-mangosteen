@@ -12,6 +12,7 @@ import (
 	"echo-mangosteen/internal/repo"
 	"echo-mangosteen/internal/router"
 	"echo-mangosteen/internal/service"
+	"echo-mangosteen/pkg/cache"
 	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
 )
@@ -25,7 +26,12 @@ func NewApp() (*echo.Echo, func(), error) {
 		return nil, nil, err
 	}
 	userRepo := repo.NewUserRepo(dataData)
-	userService := service.NewUserService(userRepo)
+	cacheCache, err := cache.NewCahce()
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	userService := service.NewUserService(userRepo, cacheCache)
 	userController := controller.NewUserController(userService)
 	echoEcho := router.NewRouter(pingController, userController)
 	return echoEcho, func() {

@@ -4,10 +4,12 @@ import (
 	"context"
 	"echo-mangosteen/internal/model"
 	"echo-mangosteen/internal/repo"
+	"echo-mangosteen/pkg/cache"
 )
 
 type userService struct {
-	repo repo.UserRepo
+	repo  repo.UserRepo
+	cache cache.Cache
 }
 
 // UserLogin implements UserService.
@@ -19,6 +21,6 @@ type UserService interface {
 	Login(ctx context.Context, user *model.UserLoginRequest) error
 }
 
-func NewUserService(repo repo.UserRepo) UserService {
-	return &userService{repo: repo}
+func NewUserService(repo repo.UserRepo, cache cache.Cache) UserService {
+	return &userService{repo: repo, cache: cache}
 }
