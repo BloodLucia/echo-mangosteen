@@ -13,7 +13,9 @@ func NewRouter(
 ) *echo.Echo {
 	e := echo.New()
 
-	e.Use(middleware.Logger())
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
 
 	e.GET("/ping", pingC.Ping)
 
