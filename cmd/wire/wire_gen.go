@@ -7,8 +7,8 @@
 package wire
 
 import (
-	"echo-mangosteen/internal/common/data"
 	"echo-mangosteen/internal/controller"
+	"echo-mangosteen/internal/data"
 	"echo-mangosteen/internal/repo"
 	"echo-mangosteen/internal/router"
 	"echo-mangosteen/internal/service"
@@ -19,11 +19,11 @@ import (
 // Injectors from wire.go:
 
 func NewApp() (*echo.Echo, func(), error) {
+	pingController := controller.NewPingController()
 	dataData, cleanup, err := data.NewData()
 	if err != nil {
 		return nil, nil, err
 	}
-	pingController := controller.NewPingController(dataData)
 	userRepo := repo.NewUserRepo(dataData)
 	userService := service.NewUserService(userRepo)
 	userController := controller.NewUserController(userService)

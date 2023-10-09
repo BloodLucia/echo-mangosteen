@@ -2,7 +2,8 @@ package repo
 
 import (
 	"context"
-	"echo-mangosteen/internal/common/data"
+
+	"echo-mangosteen/internal/data"
 	"echo-mangosteen/internal/model"
 )
 
