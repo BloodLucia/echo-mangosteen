@@ -5,11 +5,13 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/gommon/log"
+	"github.com/redis/go-redis/v9"
 	"xorm.io/xorm"
 )
 
 type Data struct {
-	DB *xorm.Engine
+	DB  *xorm.Engine
+	rdb *redis.Client
 }
 
 func NewData() (*Data, func(), error) {
@@ -35,9 +37,19 @@ func NewData() (*Data, func(), error) {
 
 	log.Print("connected to database")
 
-	return &Data{DB: db}, func() {
+	rdb, err := NewRedis()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	log.Print("connected to redis")
+
+	return &Data{DB: db, rdb: rdb}, func() {
 		if err := db.Close(); err != nil {
-			log.Errorf("failed to close db: %s", err)
+			log.Errorf("failed to close database: %s", err)
+		}
+		if err := rdb.Close(); err != nil {
+			log.Errorf("failed to close redis: %s", err)
 		}
 	}, nil
 }
