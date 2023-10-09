@@ -10,8 +10,8 @@ import (
 )
 
 type Data struct {
-	DB  *xorm.Engine
-	rdb *redis.Client
+	DB    *xorm.Engine
+	Cache *redis.Client
 }
 
 func NewData() (*Data, func(), error) {
@@ -44,7 +44,7 @@ func NewData() (*Data, func(), error) {
 
 	log.Print("connected to redis")
 
-	return &Data{DB: db, rdb: rdb}, func() {
+	return &Data{DB: db, Cache: rdb}, func() {
 		if err := db.Close(); err != nil {
 			log.Errorf("failed to close database: %s", err)
 		}

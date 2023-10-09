@@ -1,18 +1,22 @@
 package service
 
-import "echo-mangosteen/internal/repo"
+import (
+	"context"
+	"echo-mangosteen/internal/model"
+	"echo-mangosteen/internal/repo"
+)
 
 type userService struct {
 	repo repo.UserRepo
 }
 
 // UserLogin implements UserService.
-func (us *userService) UserLogin() error {
-	panic("unimplemented")
+func (us *userService) Login(ctx context.Context, user *model.UserLoginRequest) error {
+	return nil
 }
 
 type UserService interface {
-	UserLogin() error
+	Login(ctx context.Context, user *model.UserLoginRequest) error
 }
 
 func NewUserService(repo repo.UserRepo) UserService {
