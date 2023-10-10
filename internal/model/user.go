@@ -3,6 +3,8 @@ package model
 import (
 	"database/sql"
 	"time"
+
+	"github.com/spf13/cast"
 )
 
 type User struct {
@@ -26,6 +28,10 @@ type UserSendValidationCodeRequest struct {
 	Email string `validate:"required|email" message:"无效的邮箱地址" label:"用户邮箱" json:"email"`
 }
 
-func (User) TableName() string {
+func (u *User) TableName() string {
 	return "users"
+}
+
+func (u *User) GetStringID() string {
+	return cast.ToString(u.ID)
 }

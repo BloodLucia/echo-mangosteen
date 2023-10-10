@@ -12,22 +12,22 @@ type userRepo struct {
 }
 
 // FindOrCreate find a user by email and create if doesn't exist.
-func (ur *userRepo) FindOrCreateByEmail(ctx context.Context, user *model.User) error {
+func (ur *userRepo) FindOrCreateByEmail(ctx context.Context, user *model.User) (*model.User, error) {
 	exist, err := ur.Data.DB.Context(ctx).Where("email = ?", user.Email).Get(user)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if !exist {
 		if _, err := ur.Data.DB.Insert(user); err != nil {
-			return err
+			return nil, err
 		}
-		return nil
+		return user, nil
 	}
-	return nil
+	return user, nil
 }
 
 type UserRepo interface {
-	FindOrCreateByEmail(ctx context.Context, user *model.User) error
+	FindOrCreateByEmail(ctx context.Context, user *model.User) (*model.User, error)
 }
 
 func NewUserRepo(data *data.Data) UserRepo {

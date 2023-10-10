@@ -6,6 +6,8 @@ import (
 	"echo-mangosteen/internal/repo"
 	"echo-mangosteen/pkg/cache"
 	"echo-mangosteen/pkg/errors"
+	"echo-mangosteen/pkg/jwt"
+	"time"
 )
 
 type userService struct {
@@ -18,11 +20,20 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	if req.Code != "123456" {
 		return nil, errors.BadRequest().WithMsg("invalid validation code")
 	}
-	if err := us.repo.FindOrCreateByEmail(ctx, &model.User{Email: req.Email}); err != nil {
-		return nil, errors.InternalServer()
+	user, err := us.repo.FindOrCreateByEmail(ctx, &model.User{Email: req.Email})
+	if err != nil {
+		return nil, errors.InternalServer().WithErr(err)
 	}
-	// TODO 生成token
-	return nil, nil
+	jwt := jwt.New()
+	token, err := jwt.BuildToken(user.GetStringID(), time.Now().Add(10*time.Minute))
+	if err != nil {
+		return nil, errors.InternalServer().WithErr(err)
+	}
+	resp := &model.UserLoginResponse{
+		Token: token,
+	}
+
+	return resp, nil
 }
 
 type UserService interface {
