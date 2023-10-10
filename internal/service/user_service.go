@@ -20,7 +20,7 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	if req.Code != "123456" {
 		return nil, errors.BadRequest().WithMsg("invalid validation code")
 	}
-	user, err := us.repo.FindOrCreateByEmail(ctx, &model.User{Email: req.Email})
+	user, err := us.repo.FindOrCreateByEmail(ctx, req.Email)
 	if err != nil {
 		return nil, errors.InternalServer().WithErr(err)
 	}
@@ -29,9 +29,7 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	if err != nil {
 		return nil, errors.InternalServer().WithErr(err)
 	}
-	resp := &model.UserLoginResponse{
-		Token: token,
-	}
+	resp := &model.UserLoginResponse{Token: token}
 
 	return resp, nil
 }
