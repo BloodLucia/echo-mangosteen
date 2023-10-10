@@ -22,7 +22,7 @@ func NewRouter(
 
 	e.POST("/login", userCtrl.Login)
 
-	e.GET("/send_validation_code", codeCtrl.SendValidationCode)
+	e.POST("/send_validation_code", codeCtrl.SendValidationCode)
 
 	return e
 }

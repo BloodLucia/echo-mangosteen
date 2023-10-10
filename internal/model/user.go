@@ -22,6 +22,10 @@ type UserLoginResponse struct {
 	Token string `json:"token"`
 }
 
+type UserSendValidationCodeRequest struct {
+	Email string `validate:"required|email" message:"无效的邮箱地址" label:"用户邮箱" json:"email"`
+}
+
 func (User) TableName() string {
 	return "users"
 }
