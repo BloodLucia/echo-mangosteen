@@ -14,7 +14,7 @@ type userRepo struct {
 // FindOrCreate find a user by email and create if doesn't exist.
 func (ur *userRepo) FindOrCreateByEmail(ctx context.Context, email string) (*model.User, error) {
 	user := &model.User{}
-	exist, err := ur.Data.DB.Context(ctx).Where("email = ?", user.Email).Get(user)
+	exist, err := ur.Data.DB.Context(ctx).Where("email = ?", email).Get(user)
 	if err != nil {
 		return nil, err
 	}

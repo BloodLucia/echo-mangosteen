@@ -22,7 +22,7 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	}
 	user, err := us.repo.FindOrCreateByEmail(ctx, req.Email)
 	if err != nil {
-		return nil, errors.InternalServer().WithErr(err)
+		return nil, err
 	}
 	jwt := jwt.New()
 	token, err := jwt.BuildToken(user.GetStringID(), time.Now().Add(10*time.Minute))
