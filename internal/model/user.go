@@ -14,8 +14,8 @@ type User struct {
 }
 
 type UserLoginRequest struct {
-	Email string `json:"email" validate:"required"`
-	Code  string `json:"code" validate:"required"`
+	Email string `validate:"required|email" message:"email is invalid" label:"用户邮箱"`
+	Code  string `validate:"required|min_len:6|max_len:6" message:"验证码应为 6 个字符"`
 }
 
 type UserLoginResponse struct {
