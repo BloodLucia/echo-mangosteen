@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"echo-mangosteen/pkg/config"
 	"regexp"
 	"time"
 
@@ -16,9 +17,8 @@ type MyCustomClaims struct {
 	jwt.RegisteredClaims
 }
 
-func New() *JWT {
-	// TODO 應該從配置文件中獲取 key
-	return &JWT{key: []byte("qazxswedcvfrtgbnhyujm")}
+func New(conf *config.Config) *JWT {
+	return &JWT{key: []byte(conf.JWT.Key)}
 }
 
 func (j *JWT) BuildToken(userId string, expiresAt time.Time) (string, error) {

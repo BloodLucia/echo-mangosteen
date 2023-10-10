@@ -10,6 +10,8 @@ import (
 	"echo-mangosteen/internal/router"
 	"echo-mangosteen/internal/service"
 	"echo-mangosteen/pkg/cache"
+	"echo-mangosteen/pkg/config"
+	"echo-mangosteen/pkg/jwt"
 
 	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
@@ -29,7 +31,7 @@ var serviceProvider = wire.NewSet(
 	service.NewUserService,
 )
 
-func NewApp() (*echo.Echo, func(), error) {
+func NewApp(*config.Config) (*echo.Echo, func(), error) {
 	panic(wire.Build(
 		data.NewData,
 		cache.NewCahce,
@@ -37,5 +39,6 @@ func NewApp() (*echo.Echo, func(), error) {
 		serviceProvider,
 		controllerProvider,
 		router.NewRouter,
+		jwt.New,
 	))
 }

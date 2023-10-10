@@ -13,6 +13,7 @@ import (
 type userService struct {
 	repo  repo.UserRepo
 	cache cache.Cache
+	jwt   *jwt.JWT
 }
 
 // UserLogin implements UserService.
@@ -24,8 +25,8 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	if err != nil {
 		return nil, err
 	}
-	jwt := jwt.New()
-	token, err := jwt.BuildToken(user.GetStringID(), time.Now().Add(10*time.Minute))
+	// jwt := jwt.New()
+	token, err := us.jwt.BuildToken(user.GetStringID(), time.Now().Add(10*time.Minute))
 	if err != nil {
 		return nil, errors.InternalServer().WithErr(err)
 	}
@@ -38,6 +39,6 @@ type UserService interface {
 	Login(ctx context.Context, req *model.UserLoginRequest) (*model.UserLoginResponse, error)
 }
 
-func NewUserService(repo repo.UserRepo, cache cache.Cache) UserService {
-	return &userService{repo: repo, cache: cache}
+func NewUserService(repo repo.UserRepo, cache cache.Cache, jwt *jwt.JWT) UserService {
+	return &userService{repo: repo, cache: cache, jwt: jwt}
 }

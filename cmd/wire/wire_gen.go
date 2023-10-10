@@ -13,15 +13,17 @@ import (
 	"echo-mangosteen/internal/router"
 	"echo-mangosteen/internal/service"
 	"echo-mangosteen/pkg/cache"
+	"echo-mangosteen/pkg/config"
+	"echo-mangosteen/pkg/jwt"
 	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
 )
 
 // Injectors from wire.go:
 
-func NewApp() (*echo.Echo, func(), error) {
+func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 	pingController := controller.NewPingController()
-	dataData, cleanup, err := data.NewData()
+	dataData, cleanup, err := data.NewData(configConfig)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -31,7 +33,8 @@ func NewApp() (*echo.Echo, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	userService := service.NewUserService(userRepo, cacheCache)
+	jwtJWT := jwt.New(configConfig)
+	userService := service.NewUserService(userRepo, cacheCache, jwtJWT)
 	userController := controller.NewUserController(userService)
 	codeController := controller.NewCodeController()
 	echoEcho := router.NewRouter(pingController, userController, codeController)
