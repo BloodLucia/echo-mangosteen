@@ -22,7 +22,7 @@ func (ctrl *userController) Login(ctx echo.Context) error {
 	}
 	v := validate.Struct(reqBody)
 	if v.Validate() {
-		err := ctrl.userService.Login(ctx.Request().Context(), reqBody)
+		_,err := ctrl.userService.Login(ctx.Request().Context(), reqBody)
 		if err != nil {
 			return response.Build(ctx, err, nil)
 		}
