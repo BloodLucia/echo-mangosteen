@@ -3,8 +3,10 @@ package controller
 import (
 	"echo-mangosteen/internal/model"
 	"echo-mangosteen/internal/service"
+	"echo-mangosteen/pkg/errors"
 	"echo-mangosteen/pkg/response"
 
+	"github.com/gookit/validate"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,7 +20,11 @@ func (ctrl *userController) Login(ctx echo.Context) error {
 	if err := ctx.Bind(reqBody); err != nil {
 		return response.Build(ctx, err, nil)
 	}
-	return ctx.JSON(200, "login!")
+	v := validate.Struct(reqBody)
+	if v.Validate() {
+		return ctx.JSON(200, "login!")
+	}
+	return response.Build(ctx, errors.BadRequest(), v.Errors)
 }
 
 type UserController interface {

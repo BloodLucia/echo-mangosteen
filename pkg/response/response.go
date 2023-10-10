@@ -51,9 +51,15 @@ func Build(ctx echo.Context, err error, data any) error {
 		return ctx.JSON(http.StatusInternalServerError, buildErrResp(myErr))
 	}
 
-	return ctx.JSON(myErr.Code, respBody{
+	resp := respBody{
 		Code: myErr.Code,
 		Msg:  myErr.Msg,
 		Data: nil,
-	})
+	}
+
+	if data != nil {
+		resp.Data = data
+	}
+
+	return ctx.JSON(myErr.Code, resp)
 }
