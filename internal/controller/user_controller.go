@@ -24,7 +24,7 @@ func (ctrl *userController) Login(ctx echo.Context) error {
 	if v.Validate() {
 		return ctx.JSON(200, "login!")
 	}
-	return response.Build(ctx, errors.BadRequest(), v.Errors)
+	return response.Build(ctx, errors.InvalidRequestBody(), v.Errors)
 }
 
 type UserController interface {
