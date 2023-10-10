@@ -8,8 +8,9 @@ import (
 )
 
 func NewRouter(
-	pingC controller.PingController,
-	userC controller.UserController,
+	pingCtrl controller.PingController,
+	userCtrl controller.UserController,
+	codeCtrl controller.CodeController,
 ) *echo.Echo {
 	e := echo.New()
 
@@ -17,9 +18,11 @@ func NewRouter(
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 
-	e.GET("/ping", pingC.Ping)
+	e.GET("/ping", pingCtrl.Ping)
 
-	e.POST("/login", userC.Login)
+	e.POST("/login", userCtrl.Login)
+
+	e.GET("/send_validation_code", codeCtrl.SendValidationCode)
 
 	return e
 }

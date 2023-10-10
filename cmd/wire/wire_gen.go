@@ -33,7 +33,8 @@ func NewApp() (*echo.Echo, func(), error) {
 	}
 	userService := service.NewUserService(userRepo, cacheCache)
 	userController := controller.NewUserController(userService)
-	echoEcho := router.NewRouter(pingController, userController)
+	codeController := controller.NewCodeController()
+	echoEcho := router.NewRouter(pingController, userController, codeController)
 	return echoEcho, func() {
 		cleanup()
 	}, nil
