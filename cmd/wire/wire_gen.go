@@ -41,7 +41,7 @@ func NewApp() (*echo.Echo, func(), error) {
 
 // wire.go:
 
-var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController)
+var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController, controller.NewCodeController)
 
 var repoProvider = wire.NewSet(repo.NewUserRepo)
 
