@@ -19,9 +19,9 @@ type Tag struct {
 }
 
 type TagAddRequest struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Sign []byte `json:"sign"`
+	Name string `json:"name" validate:"required message:name为必填项"`
+	Type string `json:"type" validate:"required message:type为必填项"`
+	Sign []byte `json:"sign" validate:"required message:sign为必填项"`
 }
 
 func (t *Tag) TableName() string {

@@ -37,7 +37,8 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 	userService := service.NewUserService(userRepo, cacheCache, jwtJWT, configConfig)
 	userController := controller.NewUserController(userService)
 	codeController := controller.NewCodeController()
-	echoEcho := router.NewRouter(jwtJWT, pingController, userController, codeController)
+	tagController := controller.NewTagController()
+	echoEcho := router.NewRouter(jwtJWT, pingController, userController, codeController, tagController)
 	return echoEcho, func() {
 		cleanup()
 	}, nil
@@ -47,6 +48,6 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 
 var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController, controller.NewCodeController, controller.NewTagController)
 
-var repoProvider = wire.NewSet(repo.NewUserRepo)
+var repoProvider = wire.NewSet(repo.NewUserRepo, repo.NewTagRepo)
 
-var serviceProvider = wire.NewSet(service.NewUserService)
+var serviceProvider = wire.NewSet(service.NewUserService, service.NewTagService)
