@@ -21,12 +21,12 @@ func NewRouter(
 	authGroup.Use(middleware.JWTMiddleware(jwt))
 	{
 		authGroup.POST("tags/add", tagCtrl.AddTag)
-		authGroup.GET("/ping", pingCtrl.Ping)
+		authGroup.GET("ping", pingCtrl.Ping)
 	}
 
-	guestGroup := e.Group("")
+	guestGroup := e.Group("/")
 	{
-		guestGroup.POST("/login", userCtrl.Login)
+		guestGroup.POST("login", userCtrl.Login)
 	}
 
 	return e
