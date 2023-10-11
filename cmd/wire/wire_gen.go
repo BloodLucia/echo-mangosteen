@@ -37,7 +37,9 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 	userService := service.NewUserService(userRepo, cacheCache, jwtJWT, configConfig)
 	userController := controller.NewUserController(userService)
 	codeController := controller.NewCodeController()
-	tagController := controller.NewTagController()
+	tagRepo := repo.NewTagRepo(dataData)
+	tagService := service.NewTagService(tagRepo)
+	tagController := controller.NewTagController(tagService)
 	echoEcho := router.NewRouter(jwtJWT, pingController, userController, codeController, tagController)
 	return echoEcho, func() {
 		cleanup()

@@ -20,7 +20,7 @@ func NewRouter(
 	authGroup := e.Group("/")
 	authGroup.Use(middleware.JWTMiddleware(jwt))
 	{
-		authGroup.POST("/tags/add", tagCtrl.AddTag)
+		authGroup.POST("tags/add", tagCtrl.AddTag)
 		authGroup.GET("/ping", pingCtrl.Ping)
 	}
 

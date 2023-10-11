@@ -15,13 +15,13 @@ type Tag struct {
 	UserId    uint64       `xorm:"not null BIGINT(20) user_id"`
 	Name      string       `xorm:"not null varchar(50) name"`
 	Type      string       `xorm:"not null VARCHAR(10) type"`
-	Sign      []byte       `xorm:"not null CHAR(1) sign"`
+	Sign      string       `xorm:"not null CHAR(1) sign"`
 }
 
 type TagAddRequest struct {
-	Name string `json:"name" validate:"required message:name为必填项"`
-	Type string `json:"type" validate:"required message:type为必填项"`
-	Sign []byte `json:"sign" validate:"required message:sign为必填项"`
+	Name string `json:"name" validate:"required"`
+	Type string `json:"type" validate:"required"`
+	Sign string `json:"sign" validate:"required"`
 }
 
 func (t *Tag) TableName() string {

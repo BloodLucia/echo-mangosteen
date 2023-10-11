@@ -4,6 +4,7 @@ import (
 	"echo-mangosteen/internal/model"
 	"echo-mangosteen/internal/service"
 	"echo-mangosteen/pkg/errors"
+	"echo-mangosteen/pkg/jwt"
 	"echo-mangosteen/pkg/response"
 
 	"github.com/gookit/validate"
@@ -12,6 +13,15 @@ import (
 
 type userController struct {
 	userService service.UserService
+}
+
+func CurrentUser(ctx echo.Context) string {
+	val := ctx.Get("claims")
+	if val == nil {
+		return ""
+	}
+
+	return val.(*jwt.MyCustomClaims).UserId
 }
 
 // Login implements UserController.
