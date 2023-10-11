@@ -14,6 +14,10 @@ func BadRequest() *Error {
 	return New(http.StatusBadRequest, "请求格式错误, 查看data中的错误字段")
 }
 
+func Unauthorized() *Error {
+	return New(http.StatusUnauthorized, "Unauthorized")
+}
+
 func InvalidRequestBody() *Error {
 	return New(http.StatusUnprocessableEntity, "请求格式错误, 查看data中的错误字段")
 }
