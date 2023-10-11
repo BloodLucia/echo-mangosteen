@@ -16,14 +16,13 @@ func NewRouter(
 ) *echo.Echo {
 	e := echo.New()
 
-	e.Use(middleware.JWTMiddleware(jwt))
-
 	authGroup := e.Group("/")
+	authGroup.Use(middleware.JWTMiddleware(jwt))
 	{
 		authGroup.GET("/ping", pingCtrl.Ping)
 	}
 
-	guestGroup := e.Group("/")
+	guestGroup := e.Group("")
 	{
 		guestGroup.POST("/login", userCtrl.Login)
 	}

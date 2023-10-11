@@ -31,7 +31,7 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	if err != nil {
 		return nil, errors.InternalServer().WithErr(err)
 	}
-	resp := &model.UserLoginResponse{Token: token}
+	resp := &model.UserLoginResponse{Token: token, UserId: user.GetStringID()}
 
 	return resp, nil
 }
