@@ -45,7 +45,7 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 
 // wire.go:
 
-var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController, controller.NewCodeController)
+var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController, controller.NewCodeController, controller.NewTagController)
 
 var repoProvider = wire.NewSet(repo.NewUserRepo)
 

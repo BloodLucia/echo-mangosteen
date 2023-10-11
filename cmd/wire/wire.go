@@ -21,6 +21,7 @@ var controllerProvider = wire.NewSet(
 	controller.NewPingController,
 	controller.NewUserController,
 	controller.NewCodeController,
+	controller.NewTagController,
 )
 
 var repoProvider = wire.NewSet(
