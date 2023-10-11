@@ -13,7 +13,7 @@ type JWT struct {
 }
 
 type MyCustomClaims struct {
-	UserID string
+	UserId string
 	jwt.RegisteredClaims
 }
 
@@ -23,22 +23,22 @@ func New(conf *config.Config) *JWT {
 
 func (j *JWT) BuildToken(userId string, expiresAt time.Time) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, MyCustomClaims{
-		UserID: userId,
+		UserId: userId,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expiresAt),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			Issuer:    "",
 			Subject:   "",
-			ID:        userId,
+			ID:        "",
 			Audience:  []string{},
 		},
 	})
+
 	tokenString, err := token.SignedString(j.key)
 	if err != nil {
 		return "", err
 	}
-
 	return tokenString, nil
 }
 
