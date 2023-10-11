@@ -18,6 +18,12 @@ type Tag struct {
 	Sign      []byte       `xorm:"not null CHAR(1) sign"`
 }
 
+type TagAddRequest struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Sign []byte `json:"sign"`
+}
+
 func (t *Tag) TableName() string {
 	return "tags"
 }
