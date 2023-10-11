@@ -34,7 +34,7 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 		return nil, nil, err
 	}
 	jwtJWT := jwt.New(configConfig)
-	userService := service.NewUserService(userRepo, cacheCache, jwtJWT)
+	userService := service.NewUserService(userRepo, cacheCache, jwtJWT, configConfig)
 	userController := controller.NewUserController(userService)
 	codeController := controller.NewCodeController()
 	echoEcho := router.NewRouter(pingController, userController, codeController)
