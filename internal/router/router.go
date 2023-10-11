@@ -13,12 +13,14 @@ func NewRouter(
 	pingCtrl controller.PingController,
 	userCtrl controller.UserController,
 	codeCtrl controller.CodeController,
+	tagCtrl controller.TagController,
 ) *echo.Echo {
 	e := echo.New()
 
 	authGroup := e.Group("/")
 	authGroup.Use(middleware.JWTMiddleware(jwt))
 	{
+		authGroup.POST("/tags/add", tagCtrl.AddTag)
 		authGroup.GET("/ping", pingCtrl.Ping)
 	}
 
