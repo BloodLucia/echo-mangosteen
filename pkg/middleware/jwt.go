@@ -11,6 +11,9 @@ import (
 func JWTMiddleware(j *jwt.JWT) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
+			if c.Request().URL.Path == "/api/v1/login" {
+				return next(c)
+			}
 			tokenString := c.Request().Header.Get("Authorization")
 			if tokenString == "" {
 				return response.Build(c, errors.Unauthorized(), nil)

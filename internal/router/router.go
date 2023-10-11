@@ -20,17 +20,15 @@ func NewRouter(
 
 	e.Use(echoMiddleware.Logger())
 
-	v1NoAuth := e.Group("/api/v1")
-	{
-		v1NoAuth.GET("/ping", pingCtrl.Ping)
-		v1NoAuth.POST("/login", userCtrl.Login)
-	}
-
 	v1Auth := e.Group("/api/v1")
 	v1Auth.Use(middleware.JWTMiddleware(jwt))
 	{
 		v1Auth.POST("/tags/add", tagCtrl.AddTag)
 		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)
+
+		// 不需要鉴权
+		v1Auth.GET("/ping", pingCtrl.Ping)
+		v1Auth.POST("/login", userCtrl.Login)
 	}
 
 	return e
