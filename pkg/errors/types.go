@@ -18,6 +18,10 @@ func Unauthorized() *Error {
 	return New(http.StatusUnauthorized, "Unauthorized")
 }
 
+func NotFound() *Error {
+	return New(http.StatusNotFound, "NotFound")
+}
+
 func InvalidRequestBody() *Error {
 	return New(http.StatusUnprocessableEntity, "请求格式错误, 查看data中的错误字段")
 }

@@ -6,6 +6,7 @@ import (
 	"echo-mangosteen/pkg/middleware"
 
 	"github.com/labstack/echo/v4"
+	echoMiddleware "github.com/labstack/echo/v4/middleware"
 )
 
 func NewRouter(
@@ -17,16 +18,19 @@ func NewRouter(
 ) *echo.Echo {
 	e := echo.New()
 
-	authGroup := e.Group("/")
-	authGroup.Use(middleware.JWTMiddleware(jwt))
+	e.Use(echoMiddleware.Logger())
+
+	v1NoAuth := e.Group("/api/v1")
 	{
-		authGroup.POST("tags/add", tagCtrl.AddTag)
-		authGroup.GET("ping", pingCtrl.Ping)
+		v1NoAuth.GET("/ping", pingCtrl.Ping)
+		v1NoAuth.POST("/login", userCtrl.Login)
 	}
 
-	guestGroup := e.Group("/")
+	v1Auth := e.Group("/api/v1")
+	v1Auth.Use(middleware.JWTMiddleware(jwt))
 	{
-		guestGroup.POST("login", userCtrl.Login)
+		v1Auth.POST("/tags/add", tagCtrl.AddTag)
+		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)
 	}
 
 	return e

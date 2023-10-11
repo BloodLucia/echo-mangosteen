@@ -14,6 +14,15 @@ type tagController struct {
 	service service.TagService
 }
 
+// DeleteTag implements TagController.
+func (*tagController) DeleteTag(ctx echo.Context) error {
+	tagId := ctx.Param("tagId")
+	if tagId == "" {
+		return response.Build(ctx, errors.BadRequest().WithMsg("需要tagId"), nil)
+	}
+	return response.Build(ctx, nil, "ok")
+}
+
 // AddTag implements TagController.
 func (tc *tagController) AddTag(ctx echo.Context) error {
 	reqBody := &model.TagAddRequest{}
@@ -35,6 +44,7 @@ func (tc *tagController) AddTag(ctx echo.Context) error {
 
 type TagController interface {
 	AddTag(ctx echo.Context) error
+	DeleteTag(ctx echo.Context) error
 }
 
 func NewTagController(service service.TagService) TagController {
