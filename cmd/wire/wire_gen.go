@@ -23,7 +23,6 @@ import (
 
 func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 	jwtJWT := jwt.New(configConfig)
-	pingController := controller.NewPingController()
 	dataData, cleanup, err := data.NewData(configConfig)
 	if err != nil {
 		return nil, nil, err
@@ -40,7 +39,7 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 	tagRepo := repo.NewTagRepo(dataData)
 	tagService := service.NewTagService(tagRepo)
 	tagController := controller.NewTagController(tagService)
-	echoEcho := router.NewRouter(jwtJWT, pingController, userController, codeController, tagController)
+	echoEcho := router.NewRouter(jwtJWT, userController, codeController, tagController)
 	return echoEcho, func() {
 		cleanup()
 	}, nil
@@ -48,7 +47,7 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 
 // wire.go:
 
-var controllerProvider = wire.NewSet(controller.NewPingController, controller.NewUserController, controller.NewCodeController, controller.NewTagController)
+var controllerProvider = wire.NewSet(controller.NewUserController, controller.NewCodeController, controller.NewTagController)
 
 var repoProvider = wire.NewSet(repo.NewUserRepo, repo.NewTagRepo)
 

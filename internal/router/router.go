@@ -4,6 +4,7 @@ import (
 	"echo-mangosteen/internal/controller"
 	"echo-mangosteen/pkg/jwt"
 	"echo-mangosteen/pkg/middleware"
+	"echo-mangosteen/pkg/response"
 
 	"github.com/labstack/echo/v4"
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
@@ -11,7 +12,6 @@ import (
 
 func NewRouter(
 	jwt *jwt.JWT,
-	pingCtrl controller.PingController,
 	userCtrl controller.UserController,
 	codeCtrl controller.CodeController,
 	tagCtrl controller.TagController,
@@ -27,7 +27,9 @@ func NewRouter(
 		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)
 
 		// 不需要鉴权
-		v1Auth.GET("/ping", pingCtrl.Ping)
+		v1Auth.GET("/ping", func(c echo.Context) error {
+			return response.Build(c, nil, "pong!")
+		})
 		v1Auth.POST("/login", userCtrl.Login)
 	}
 

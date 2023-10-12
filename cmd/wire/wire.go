@@ -18,7 +18,6 @@ import (
 )
 
 var controllerProvider = wire.NewSet(
-	controller.NewPingController,
 	controller.NewUserController,
 	controller.NewCodeController,
 	controller.NewTagController,
