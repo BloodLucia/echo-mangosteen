@@ -25,7 +25,7 @@ func (us *userService) Login(ctx context.Context, req *model.UserLoginRequest) (
 	}
 	user, err := us.repo.FindOrCreateByEmail(ctx, req.Email)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 	token, err := us.jwt.BuildToken(user.GetStringID(), time.Now().Add(time.Duration(us.conf.JWT.ExpireAt)*time.Minute))
 	if err != nil {
