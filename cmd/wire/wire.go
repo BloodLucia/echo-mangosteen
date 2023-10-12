@@ -21,16 +21,19 @@ var controllerProvider = wire.NewSet(
 	controller.NewUserController,
 	controller.NewCodeController,
 	controller.NewTagController,
+	controller.NewItemController,
 )
 
 var repoProvider = wire.NewSet(
 	repo.NewUserRepo,
 	repo.NewTagRepo,
+	repo.NewItemRepo,
 )
 
 var serviceProvider = wire.NewSet(
 	service.NewUserService,
 	service.NewTagService,
+	service.NewItemService,
 )
 
 func NewApp(*config.Config) (*echo.Echo, func(), error) {
