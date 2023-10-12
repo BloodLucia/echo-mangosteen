@@ -21,6 +21,13 @@ type Item struct {
 	HappenedAt time.Time    `xorm:"not null DATETIME happened_at"`
 }
 
+type CreateItemRequest struct {
+	TagId      string    `json:"tag_id" validate:"required"`
+	Kind       string    `json:"kind" validate:"required"`
+	Amount     int       `json:"amount"`
+	HappenedAt time.Time `json:"happened_at"`
+}
+
 func (i *Item) TableName() string {
 	return "items"
 }
