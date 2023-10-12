@@ -13,6 +13,7 @@ func NewRouter(
 	userCtrl controller.UserController,
 	codeCtrl controller.CodeController,
 	tagCtrl controller.TagController,
+	itemCtrl controller.ItemController,
 ) *echo.Echo {
 	e := echo.New()
 
@@ -23,6 +24,8 @@ func NewRouter(
 	{
 		v1Auth.POST("/tags/add", tagCtrl.AddTag)
 		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)
+		v1Auth.POST("/items/add", itemCtrl.CreateItem)
+
 		v1Auth.POST("/login", userCtrl.Login)
 	}
 

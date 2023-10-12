@@ -22,8 +22,8 @@ type Item struct {
 }
 
 type CreateItemRequest struct {
-	TagId      string    `json:"tag_id" validate:"required"`
-	Kind       string    `json:"kind" validate:"required"`
+	TagId      string    `json:"tag_id"`
+	Kind       string    `json:"kind"`
 	Amount     int       `json:"amount"`
 	HappenedAt time.Time `json:"happened_at"`
 }

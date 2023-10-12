@@ -39,7 +39,10 @@ func NewApp(configConfig *config.Config) (*echo.Echo, func(), error) {
 	tagRepo := repo.NewTagRepo(dataData)
 	tagService := service.NewTagService(tagRepo)
 	tagController := controller.NewTagController(tagService)
-	echoEcho := router.NewRouter(jwtJWT, userController, codeController, tagController)
+	itemRepo := repo.NewItemRepo(dataData)
+	itemService := service.NewItemService(itemRepo)
+	itemController := controller.NewItemController(itemService)
+	echoEcho := router.NewRouter(jwtJWT, userController, codeController, tagController, itemController)
 	return echoEcho, func() {
 		cleanup()
 	}, nil
