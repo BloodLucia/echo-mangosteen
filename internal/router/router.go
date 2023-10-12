@@ -21,7 +21,7 @@ func NewRouter(
 	e.Use(echoMiddleware.Logger())
 
 	v1Auth := e.Group("/api/v1")
-	v1Auth.Use(middleware.JWTMiddleware(jwt))
+	v1Auth.Use(middleware.JWTAuth(jwt))
 	{
 		v1Auth.POST("/tags/add", tagCtrl.AddTag)
 		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)

@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func JWTMiddleware(j *jwt.JWT) echo.MiddlewareFunc {
+func JWTAuth(j *jwt.JWT) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			whiteList := []string{"/login", "/ping"}
