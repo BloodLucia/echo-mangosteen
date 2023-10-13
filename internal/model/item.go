@@ -10,22 +10,22 @@ import (
 type Kind string
 
 type Item struct {
-	ID         int64       `xorm:"not null pk autoincr BIGINT(20) id"`
+	ID         int64        `xorm:"not null pk autoincr BIGINT(20) id"`
 	CreatedAt  time.Time    `xorm:"created TIMESTAMP created_at"`
 	UpdatedAt  time.Time    `xorm:"updated TIMESTAMP updated_at"`
 	DeletedAt  sql.NullTime `xorm:"TIMESTAMP deleted_at"`
-	UserId     int64      `xorm:"not null BIGINT(20) user_id"`
-	TagId      int64       `xorm:"not null BIGINT(20) tag_id"`
+	UserId     int64        `xorm:"not null BIGINT(20) user_id"`
+	TagId      int64        `xorm:"not null BIGINT(20) tag_id"`
 	Kind       string       `xorm:"not null VARCHAR(10) kind"`
 	Amount     int          `xorm:"not null DECIMAL(2) amount"`
 	HappenedAt time.Time    `xorm:"not null DATETIME happened_at"`
 }
 
 type CreateItemRequest struct {
-	TagId      string    `json:"tag_id"`
-	Kind       string    `json:"kind"`
-	Amount     int       `json:"amount"`
-	HappenedAt time.Time `json:"happened_at"`
+	TagId      string `json:"tag_id"`
+	Kind       string `json:"kind"`
+	Amount     int    `json:"amount"`
+	HappenedAt string `json:"happened_at"`
 }
 
 func (i Item) TableName() string {
