@@ -9,12 +9,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func JWTAuth(j *jwt.JWT) echo.MiddlewareFunc {
+func JWTAuth(j *jwt.JWT, skipRoutes ...string) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			whiteList := []string{"/login", "/ping"}
 			requestPATH := c.Request().URL.Path
-			if contains(whiteList, strings.TrimPrefix(requestPATH, "/api/v1")) {
+			if contains(skipRoutes, strings.TrimPrefix(requestPATH, "/api/v1")) {
 				return next(c)
 			}
 			tokenString := c.Request().Header.Get("Authorization")

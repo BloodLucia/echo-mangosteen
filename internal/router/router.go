@@ -3,6 +3,7 @@ package router
 import (
 	"echo-mangosteen/internal/controller"
 	"echo-mangosteen/pkg/jwt"
+	"echo-mangosteen/pkg/middleware"
 
 	"github.com/labstack/echo/v4"
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
@@ -20,7 +21,7 @@ func NewRouter(
 	e.Use(echoMiddleware.Logger())
 
 	v1Auth := e.Group("/api/v1")
-	// v1Auth.Use(middleware.JWTAuth(jwt))
+	v1Auth.Use(middleware.JWTAuth(jwt, "/login"))
 	{
 		v1Auth.POST("/tags/add", tagCtrl.AddTag)
 		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)
