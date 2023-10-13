@@ -21,7 +21,7 @@ func (ic *itemController) CreateItem(c echo.Context) error {
 	userId := CurrentUser(c)
 	if err := c.Bind(&reqBody); err != nil {
 		// TODO 自定义错误
-		return response.Build(c, errors.New(http.StatusUnprocessableEntity, "无法解析请求体"), nil)
+		return response.Build(c, errors.UnprocessableEntity(), nil)
 	}
 	v := validate.Struct(&reqBody)
 	if v.Validate() {
