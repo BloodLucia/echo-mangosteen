@@ -23,10 +23,15 @@ func NewRouter(
 	v1Auth := e.Group("/api/v1")
 	v1Auth.Use(middleware.JWTAuth(jwt, "/login"))
 	{
+
+		// tags
 		v1Auth.POST("/tags/add", tagCtrl.AddTag)
 		v1Auth.DELETE("/tags/delete/:tagId", tagCtrl.DeleteTag)
+
+		// items
 		v1Auth.POST("/items/add", itemCtrl.CreateItem)
 
+		// no auth
 		v1Auth.POST("/login", userCtrl.Login)
 	}
 
