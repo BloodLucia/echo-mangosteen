@@ -16,7 +16,7 @@ type tagService struct {
 // AddTag implements TagService.
 func (srv *tagService) AddTag(ctx context.Context, userId string, req *model.TagAddRequest) error {
 	tag := &model.Tag{
-		UserId: cast.ToUint64(userId),
+		UserId: cast.ToInt64(userId),
 		Name:   req.Name,
 		Type:   req.Type,
 		Sign:   req.Sign,

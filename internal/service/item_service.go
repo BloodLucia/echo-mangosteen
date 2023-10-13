@@ -17,9 +17,9 @@ type itemService struct {
 // CreateItem implements ItemService.
 func (srv *itemService) CreateItem(ctx context.Context, userId string, req *model.CreateItemRequest) error {
 	item := &model.Item{
-		UserId:     cast.ToUint64(userId),
-		TagId:      cast.ToUint64(req.TagId),
-		Kind:       model.Kind(req.Kind),
+		UserId:     cast.ToInt64(userId),
+		TagId:      cast.ToInt64(req.TagId),
+		Kind:       req.Kind,
 		Amount:     req.Amount,
 		HappenedAt: time.Now(),
 	}

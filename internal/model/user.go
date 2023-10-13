@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	ID        uint64    `xorm:"not null pk autoincr BIGINT(20) id"`
+	ID        int64     `xorm:"not null pk autoincr BIGINT(20) id"`
 	CreatedAt time.Time `xorm:"created TIMESTAMP created_at"`
 	UpdatedAt time.Time `xorm:"updated TIMESTAMP updated_at"`
 	Email     string    `xorm:"not null VARCHAR(100) UNIQUE email"`
@@ -27,10 +27,10 @@ type UserSendValidationCodeRequest struct {
 	Email string `validate:"required|email" message:"无效的邮箱地址" label:"用户邮箱" json:"email"`
 }
 
-func (u *User) TableName() string {
+func (u User) TableName() string {
 	return "users"
 }
 
-func (u *User) GetStringID() string {
+func (u User) GetStringID() string {
 	return cast.ToString(u.ID)
 }
